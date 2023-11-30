@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/main.css" />
+
+    <title>Single Page Web App</title>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.2"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1><a href="index.html">Single Page Web App</a></h1>
+
+        <div class="buttons-container">
+          <button class="btn" id="search-button">Search</button>
+          <button class="btn" id="saved-button">Saved</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- SEARCH -->
+      <section class="search">
+        <dialog id="dialog--search-box">
+          <h2>Run a search for images</h2>
+
+          <form action="" id="search__form">
+            <div class="form-unit">
+              <label for="search">Key Term</label>
+              <input
+                type="search"
+                name="search"
+                id="search"
+                placeholder="Search Image"
+              />
+            </div>
+
+            <div class="form-unit">
+              <input
+                type="button"
+                value="Cancel"
+                class="btn"
+                id="cancel-button"
+              />
+              <input
+                type="submit"
+                value="Run Search"
+                class="btn"
+                id="submit-button"
+              />
+            </div>
+          </form>
+        </dialog>
+      </section>
+
+      <!-- PREVIEW IMAGES -->
+      <section class="images" id="images">
+        <div class="container" id="image-grid">
+          <!-- APPEND PREVIEW IMAGES / SAVED IMAGES -->
+        </div>
+      </section>
+
+      <!-- LARGE IMAGES (SEARCH) -->
+      <section class="searched-image__Bg">
+        <dialog id="dialog--searched-box" class="dialog-box">
+          <!-- <div id="large-image__container">
+            APPEND LARGE IMAGE
+          </div> -->
+
+          <!-- <div class="large-image__buttons">
+            <button class="save-image__btn btn">Save</button>
+            <button class="cancel-image__btn btn">Cancel</button>
+          </div> -->
+        </dialog>
+      </section>
+
+      <!-- LARGE IMAGES (SAVED) -->
+      <section class="saved-image__Bg">
+        <dialog id="dialog--saved-box" class="dialog-box">
+          <!-- <div id="large-image__container">
+            APPEND LARGE IMAGE
+          </div> -->
+
+          <!-- <div class="large-image__buttons">
+            <button class="cancel-image__btn btn">Cancel</button>
+            <button class="delete-image__btn btn">Delete Image</button>
+          </div> -->
+        </dialog>
+      </section>
+    </main>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>

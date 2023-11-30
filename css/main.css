@@ -1,0 +1,370 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
+
+/* Root */
+:root {
+  --dominant-color: #002642;
+  --secondary-color: #840032;
+  --accent-color: #e59500;
+  --off-white-color: #fafafa;
+  --font-family: "Montserrat", sans-serif;
+}
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Set core root defaults */
+html {
+  line-height: 1.5;
+  font-family: var(--font-family), Roboto, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Oxygen, Ubuntu, Cantarell, "Open Sans",
+    "Helvetica Neue", sans-serif;
+}
+
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  margin: 0;
+}
+
+/* Update default margin */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+figure,
+blockquote,
+ul,
+ol,
+dl,
+dd {
+  margin: 0 0 1.5rem;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+}
+
+/* A elements that don't have a class get default styles */
+a {
+  text-decoration-skip-ink: auto;
+  color: #36bf7f;
+}
+​a:hover,
+a:focus-visible {
+  color: #d96666;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+svg {
+  fill: currentColor;
+}
+
+svg:not(:root) {
+  overflow: hidden;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- Containers ---------- */
+
+.container {
+  width: min(65em, 100%);
+  margin: 0 auto;
+  padding-left: 5rem;
+  padding-right: 5rem;
+}
+​.container--text {
+  width: min(45em, 100%);
+}
+
+/* ----- BTN ----- */
+.btn {
+  --btn-color: var(--secondary-color, deepskyblue);
+  display: inline-block;
+  border: 0.125em solid var(--btn-color);
+  border-radius: 0.25em;
+  padding: 0.55em 1.5em 0.5em;
+  background-color: var(--btn-color);
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: inherit;
+  font-size: inherit;
+  text-transform: uppercase;
+  font-weight: bold;
+  transition: color 0.2s;
+  align-self: flex-start;
+}
+
+.btn:is(:hover, :focus-visible) {
+  color: var(--accent-color);
+}
+
+/* ---------- Typography ---------- */
+h1 {
+  font-size: 1.602rem;
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+@media only screen and (min-width: 55em) {
+  h1 {
+    font-size: 1.802rem;
+  }
+}
+
+@media only screen and (min-width: 65em) {
+}
+
+/* ---------- HEADER ----------- */
+
+header {
+  background-color: var(--dominant-color);
+}
+
+header .container {
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 0.75rem;
+}
+
+header h1 {
+  color: var(--off-white-color);
+  margin: 0;
+}
+
+header h1 a {
+  text-decoration: none;
+  color: var(--off-white-color);
+}
+
+.buttons-container {
+  display: flex;
+  gap: 1rem;
+}
+
+@media only screen and (min-width: 40em) {
+  header .container {
+    flex-direction: row;
+  }
+}
+
+/* ----------- SEARCH / SAVED DIALOG ----------- */
+.search {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #0009;
+  display: none;
+}
+
+#dialog--search-box {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  background-color: var(--dominant-color);
+  margin: 0;
+  border-radius: 0.5em;
+  height: clamp(10em, 25em, 100%);
+  width: clamp(15em, 30em, 100%);
+  color: var(--off-white-color);
+
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#dialog--search-box h2 {
+  margin: 1rem 0 0 0.5rem;
+}
+
+/* --------- FORM --------- */
+
+#search__form {
+  padding: 2.5rem 3rem;
+}
+
+.form-unit {
+  margin: 1rem 0;
+}
+
+.form-unit label {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+#search {
+  background-color: #0004;
+  outline: none;
+  border: 0.2rem solid var(--secondary-color);
+  color: var(--off-white-color);
+  width: 100%;
+  font-size: 1.1rem;
+}
+
+::placeholder {
+  color: var(--off-white-color);
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  padding-left: 0.25rem;
+}
+
+#search:focus::placeholder {
+  color: transparent;
+}
+
+[type="submit"] {
+  margin-left: 0.2rem;
+}
+
+.form-unit :where([type="submit"], [type="button"]) {
+  margin: 0.5rem 0;
+}
+
+/* --------- SAVED ---------- */
+.saved-images {
+  cursor: pointer;
+}
+
+/* --------- IMAGES ---------- */
+
+#image-grid {
+  padding: 2rem 1.5rem;
+
+  --cols: 1;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), 1fr);
+  gap: 1rem;
+
+  align-items: center;
+  justify-items: center;
+}
+
+.image__item {
+  cursor: pointer;
+}
+
+@media only screen and (min-width: 35em) {
+  #images .container {
+    width: min(35em, 100%);
+  }
+
+  #image-grid {
+    --cols: 4;
+  }
+
+  .image-results {
+    grid-column: 1 / 3;
+    justify-self: right;
+    font-size: 1.5rem;
+  }
+}
+@media only screen and (min-width: 60em) {
+  #images .container {
+    width: min(50em, 100%);
+  }
+
+  #image-grid {
+    --cols: 5;
+  }
+
+  .image-results {
+    grid-column: 1 / 3;
+    justify-self: right;
+    font-size: 1.5rem;
+  }
+}
+
+/* ------- SEARCHED / SAVED IMAGE DIALOG  ------- */
+.searched-image__Bg,
+.saved-image__Bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #0009;
+  display: none;
+}
+
+.dialog-box {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  background-color: var(--dominant-color);
+  margin: 0;
+  border-radius: 0.5em;
+  height: clamp(10em, 35em, 100%);
+  width: clamp(15em, 50em, 100%);
+  color: var(--off-white-color);
+
+  padding: 1.5rem;
+}
+
+.large-image__container {
+  height: 90%;
+  width: 100%;
+  display: inline-flex;
+}
+
+.large-image__container img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.large-image__buttons {
+  margin-top: 0.35rem;
+}
+
+.cancel-search__btn,
+.delete-image__btn {
+  margin-left: 0.5rem;
+}
