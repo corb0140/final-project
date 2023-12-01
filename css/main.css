@@ -175,6 +175,7 @@ header .container {
 header h1 {
   color: var(--off-white-color);
   margin: 0;
+  text-transform: uppercase;
 }
 
 header h1 a {
