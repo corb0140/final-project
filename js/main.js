@@ -1,3 +1,25 @@
+import {
+  FaceDetector,
+  FilesetResolver,
+} from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0";
+
+let faceDetector;
+const runningMode = "IMAGE";
+
+// Initialize the object detector
+const initializefaceDetector = async () => {
+  const vision = await FilesetResolver.forVisionTasks(
+    "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/wasm"
+  );
+  faceDetector = await FaceDetector.createFromOptions(vision, {
+    baseOptions: {
+      modelAssetPath: `https://storage.googleapis.com/mediapipe-models/face_detector/blaze_face_short_range/float16/1/blaze_face_short_range.tflite`,
+      delegate: "GPU",
+    },
+    runningMode: runningMode,
+  });
+};
+
 // APP OBJECT
 const APP = {
   cache: null,
@@ -176,13 +198,16 @@ const APP = {
              <img class="saved-images" src="${response.url}" alt="image generated from pixabay api" data-url="${response.url}"/>
                   `;
 
+            initializefaceDetector();
+
             document.querySelectorAll(".saved-images").forEach((evt) => {
               evt.addEventListener("click", (ev) => {
                 let image = ev.target.getAttribute("data-url");
+                console.log(image);
 
                 APP.savedImageContainer.innerHTML = `
                     <div class="large-image__container">
-                      <img src="${image}" alt="${APP.search.value} image generated from pixabay api" />
+                      <img class="detectImage" src="${image}" alt="${APP.search.value} image generated from pixabay api" crossorigin="anonymous"/>
                     </div>
 
                     <div class="large-image__buttons">
@@ -218,13 +243,135 @@ const APP = {
 
                 APP.savedImageContainer.style.display = "block";
                 APP.savedImageBg.style.display = "block";
-              });
-            });
-          })
-        );
-      }
+
+                // MEDIA PIPE
+
+                /********************************************************************
+                // Demo 1: Grab a bunch of images from the page and detection them
+                // upon click.
+              ********************************************************************/
+
+                const imageContainers = document.getElementsByClassName(
+                  "large-image__container"
+                );
+
+                for (let imageContainer of imageContainers) {
+                  imageContainer.children[0].addEventListener(
+                    "load",
+                    handleDetect
+                  );
+                }
+
+                /**
+                 * Detect faces in still images on click
+                 */
+                async function handleDetect(event) {
+                  const highlighters =
+                    event.target.parentNode.getElementsByClassName(
+                      "highlighter"
+                    );
+                  while (highlighters[0]) {
+                    highlighters[0].parentNode.removeChild(highlighters[0]);
+                  }
+                  const infos =
+                    event.target.parentNode.getElementsByClassName("info");
+                  while (infos[0]) {
+                    infos[0].parentNode.removeChild(infos[0]);
+                  }
+                  const keyPoints =
+                    event.target.parentNode.getElementsByClassName("key-point");
+                  while (keyPoints[0]) {
+                    keyPoints[0].parentNode.removeChild(keyPoints[0]);
+                  }
+
+                  if (!faceDetector) {
+                    console.log(
+                      "Wait for objectDetector to load before clicking"
+                    );
+                    return;
+                  }
+
+                  const ratio =
+                    event.target.height / event.target.naturalHeight;
+                  // faceDetector.detect returns a promise which, when resolved, is an array of Detection faces
+                  const detections = faceDetector.detect(
+                    event.target
+                  ).detections;
+                  console.log(detections);
+
+                  displayImageDetections(detections, event.target);
+                } //  handleDetect Function
+
+                function displayImageDetections(detections, resultElement) {
+                  const ratio =
+                    resultElement.height / resultElement.naturalHeight;
+                  console.log(ratio);
+
+                  for (let detection of detections) {
+                    // Description text
+                    const p = document.createElement("p");
+                    p.setAttribute("class", "info");
+                    p.innerText =
+                      "Confidence: " +
+                      Math.round(
+                        parseFloat(detection.categories[0].score) * 100
+                      ) +
+                      "% .";
+                    // Positioned at the top left of the bounding box.
+                    // Height is whatever the text takes up.
+                    // Width subtracts text padding in CSS so fits perfectly.
+                    p.style =
+                      "left: " +
+                      detection.boundingBox.originX * ratio +
+                      "px;" +
+                      "top: " +
+                      (detection.boundingBox.originY * ratio - 30) +
+                      "px; " +
+                      "width: " +
+                      detection.boundingBox.width * (ratio + 0.3) +
+                      "px;" +
+                      "height: " +
+                      30 +
+                      "px;";
+
+                    const highlighter = document.createElement("div");
+                    highlighter.setAttribute("class", "highlighter");
+                    highlighter.style =
+                      "left: " +
+                      detection.boundingBox.originX * ratio +
+                      "px;" +
+                      "top: " +
+                      detection.boundingBox.originY * ratio +
+                      "px;" +
+                      "width: " +
+                      detection.boundingBox.width * (ratio + 0.3) +
+                      "px;" +
+                      "height: " +
+                      detection.boundingBox.height * ratio * 1.2 +
+                      "px;";
+                    resultElement.parentNode.appendChild(highlighter);
+                    resultElement.parentNode.appendChild(p);
+
+                    for (let keypoint of detection.keypoints) {
+                      const keypointEl = document.createElement("spam");
+                      keypointEl.className = "key-point";
+                      keypointEl.style.top = `${
+                        keypoint.y * resultElement.height - 3
+                      }px`;
+                      keypointEl.style.left = `${
+                        keypoint.x * resultElement.width - 3
+                      }px`;
+                      resultElement.parentNode.appendChild(keypointEl);
+                    } //for let keypoint of keypoints
+                  } //for let detection of detections
+                } // display image detection
+              }); //add eventListener for forEach
+            }); //forEach
+          }) //responses.map
+        ); // promise.all
+      } // if key.length
     })();
-  },
+  }, // displaySavedImages: function
 
   errorHandler: function (err) {
     console.log(err);

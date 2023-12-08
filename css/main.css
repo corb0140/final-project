@@ -349,10 +349,33 @@ header h1 a {
   padding: 1.5rem;
 }
 
+.large-image__buttons {
+  margin-top: 0.35rem;
+}
+
+.cancel-search__btn,
+.delete-image__btn {
+  margin-left: 0.5rem;
+}
+
+/* ------- MEDIAPIPE ------- */
+
 .large-image__container {
   height: 90%;
   width: 100%;
   display: inline-flex;
+  z-index: 0;
+}
+
+.large-image__container p {
+  position: absolute;
+  padding: 5px;
+  background-color: #007f8b;
+  color: #fff;
+  border: 1px dashed rgba(255, 255, 255, 0.7);
+  z-index: 2;
+  font-size: 12px;
+  margin: 0;
 }
 
 .large-image__container img {
@@ -361,11 +384,26 @@ header h1 a {
   height: 100%;
 }
 
-.large-image__buttons {
-  margin-top: 0.35rem;
+.highlighter {
+  background: rgba(0, 255, 0, 0.25);
+  border: 2px dashed #fff;
+  z-index: 1;
+  position: absolute;
 }
 
-.cancel-search__btn,
-.delete-image__btn {
-  margin-left: 0.5rem;
+.key-point {
+  position: absolute;
+  z-index: 1;
+  width: 5px;
+  height: 5px;
+  background-color: #ff0000;
+  border-radius: 50%;
+  display: block;
+}
+
+.no-faces {
+  position: absolute;
+  font-weight: bold;
+  bottom: 0.5em;
+  right: 1.5em;
 }
