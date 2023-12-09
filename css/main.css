@@ -404,7 +404,7 @@ header h1 a {
   pointer-events: none;
 }
 
-.no-faces {
+.no-face {
   position: absolute;
   font-weight: bold;
   bottom: 0.5em;

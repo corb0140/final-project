@@ -214,6 +214,8 @@ const APP = {
                       <button class="cancel-saved__btn btn">Cancel</button>
                       <button class="delete-image__btn btn">Delete Image</button>
                     </div>
+
+                    <p class="no-face"> </>
                 `;
 
                 const cancelSavedBtn =
@@ -297,7 +299,13 @@ const APP = {
                   const detections = faceDetector.detect(
                     event.target
                   ).detections;
-                  console.log(detections);
+
+                  if (detections < 1) {
+                    document.querySelector(".no-face").textContent =
+                      "No Faces Detected";
+                  } else {
+                    console.log(detections);
+                  }
 
                   displayImageDetections(detections, event.target);
                 } //  handleDetect Function
@@ -305,7 +313,7 @@ const APP = {
                 function displayImageDetections(detections, resultElement) {
                   const ratio =
                     resultElement.height / resultElement.naturalHeight;
-                  console.log(ratio);
+                  // console.log(ratio);
 
                   for (let detection of detections) {
                     // Description text
