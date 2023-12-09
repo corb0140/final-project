@@ -376,6 +376,7 @@ header h1 a {
   z-index: 2;
   font-size: 12px;
   margin: 0;
+  pointer-events: none;
 }
 
 .large-image__container img {
@@ -389,6 +390,7 @@ header h1 a {
   border: 2px dashed #fff;
   z-index: 1;
   position: absolute;
+  pointer-events: none;
 }
 
 .key-point {
@@ -399,6 +401,7 @@ header h1 a {
   background-color: #ff0000;
   border-radius: 50%;
   display: block;
+  pointer-events: none;
 }
 
 .no-faces {
